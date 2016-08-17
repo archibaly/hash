@@ -142,10 +142,10 @@ struct hlist_node {
 };
 
 #define HLIST_HEAD_INIT { .first = NULL }
-#define HLIST_HEAD(name) struct hlist_head name = {  .first = NULL }
+#define HLIST_HEAD(name) struct hlist_head name = { .first = NULL }
 #define INIT_HLIST_HEAD(ptr) ((ptr)->first = NULL)
 
-static inline void INIT_HLIST_NODE(struct hlist_node *h)
+static inline void hlist_node_init(struct hlist_node *h)
 {
 	h->next = NULL;
 	h->pprev = NULL;
@@ -182,7 +182,7 @@ static inline void hlist_del_init(struct hlist_node *n)
 {
 	if (!hlist_unhashed(n)) {
 		__hlist_del(n);
-		INIT_HLIST_NODE(n);
+		hlist_node_init(n);
 	}
 }
 
