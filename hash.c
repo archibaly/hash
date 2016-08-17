@@ -9,7 +9,7 @@
 /* 2^31 + 2^29 - 2^25 + 2^22 - 2^19 - 2^16 + 1 */
 #define GOLDEN_RATIO_PRIME_32 0x9e370001UL
 
-static struct hlist_head *hash_table;
+static struct hash_head *hash_table;
 static int hash_shift;
 static int hash_key_type;
 
@@ -45,13 +45,18 @@ int hash_init(int size, int key_type)
 	hash_shift = log(size) / log(2);
 	hash_key_type = key_type;
 
-	if (!(hash_table = malloc(sizeof(struct hlist_head) * size)))
+	if (!(hash_table = malloc(sizeof(struct hash_head) * size)))
 		return -1;
 	
 	for (i = 0; i < size; i++)
 		INIT_HLIST_HEAD(hash_table + i);
 
 	return 0;
+}
+
+struct hash_head *hash_get_head(void)
+{
+	return hash_table;
 }
 
 static struct hash_node *new_hash_node(void *key, void *value)
