@@ -10,4 +10,4 @@ $(EXE): main.o hash.o
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -f *.o $(EXE)
+	rm -f *.o tags $(EXE)
