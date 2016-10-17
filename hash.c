@@ -104,9 +104,8 @@ static int hash_int_find(struct hash_table *table, int key,
 	hash_for_each_entry(pos, table->head + offset) {
 		if (*(int *)pos->key == key) {
 			if (i < size)
-				node[i++] = pos;
-			else
-				break;
+				node[i] = pos;
+			i++;
 		}
 	}
 
@@ -128,9 +127,8 @@ static int hash_str_find(struct hash_table *table, const char *key,
 	hash_for_each_entry(pos, table->head + offset) {
 		if (strcmp((char *)pos->key, key) == 0) {
 			if (i < size)
-				node[i++] = pos;
-			else
-				break;
+				node[i] = pos;
+			i++;
 		}
 	}
 

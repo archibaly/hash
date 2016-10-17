@@ -2,6 +2,8 @@
 
 #include "hash.h"
 
+#define array_size(x)	(sizeof(x) / sizeof(x[0]))
+
 int main()
 {
 	struct hash_table *table;
@@ -11,16 +13,20 @@ int main()
 
 	hash_add(table, "123", "value1");
 	hash_add(table, "123", "valuex");
+	hash_add(table, "123", "value3");
+	hash_add(table, "123", "valuex");
+	hash_add(table, "123", "valuex");
 	hash_add(table, "aece", "value2");
 	hash_add(table, "0uej", "value3");
 
-	struct hash_node *node[8];
+	struct hash_node *node[4];
 
 	int n = hash_find(table, "123", node, sizeof(node));
+	printf("n = %d\n", n);
 
 	int i;
 	if (n > 0) {
-		for (i = 0; i < n; i++)
+		for (i = 0; i < n && i < array_size(node); i++)
 			printf("node[%d]->value = %s\n", i, (char *)node[i]->value);
 	} else {
 		printf("can not find\n");
@@ -45,7 +51,7 @@ int main()
 	n = hash_find(table, &key, node, sizeof(node));
 
 	if (n > 0) {
-		for (i = 0; i < n; i++)
+		for (i = 0; i < n && i < array_size(node); i++)
 			printf("node[%d]->value = %s\n", i, (char *)node[i]->value);
 	} else {
 		printf("can not find\n");
