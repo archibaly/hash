@@ -63,7 +63,7 @@ static struct hash_node *new_hash_node(void *key, void *value)
 
 	node->key = key;
 	node->value = value;
-	hlist_node_init(&node->node);
+	INIT_HLIST_NODE(&node->node);
 
 	return node;
 }
@@ -156,9 +156,11 @@ void hash_free_node(struct hash_node *node)
 {
 	if (!node)
 		return;
+
 	if (!hlist_unhashed(&node->node)) {
-		__hlist_del(&node->node);
+		hlist_del(&node->node);
 	}
+
 	free(node);
 }
 
@@ -166,12 +168,13 @@ void hash_free(struct hash_table *table)
 {
 	int i;
 	struct hash_node *pos;
+	struct hlist_node *tmp;
 
 	if (!table)
 		return;
 
 	for (i = 0; i < table->size; i++) {
-		hash_for_each_entry(pos, table->head + i) {
+		hash_for_each_entry_safe(pos, tmp, table->head + i) {
 			hash_free_node(pos);
 		}
 	}
