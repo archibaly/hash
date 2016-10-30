@@ -7,7 +7,7 @@
 int main()
 {
 	struct hash_table *table;
-	table = hash_init(32, HASH_KEY_TYPE_STR);
+	table = hash_init(31, HASH_KEY_TYPE_STR);
 	if (!table)
 		return -1;
 

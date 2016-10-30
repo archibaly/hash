@@ -1,10 +1,9 @@
 CC = gcc
 EXE = hash
 CFLAGS = -Wall -DDEBUG
-LDFLAGS = -lm
 
 $(EXE): main.o hash.o
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
